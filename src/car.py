@@ -1,3 +1,4 @@
+import pygame.key
 import pygame
 
 
@@ -6,6 +7,7 @@ class MyCar:
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.center = position
+        self.game_status = 'game'
 
     def border(self):
         if self.rect.right > 480:
@@ -23,3 +25,11 @@ class MyCar:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def crash(self, sound, barriers):
+        for car in barriers:
+            if car.rect.colliderect(self.rect):
+                print('Game Over')
+                #pygame.image.load('imgs/game_over.png').convert_alpha()
+                sound.play()
+                self.game_status = 'game_over'
