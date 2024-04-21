@@ -12,15 +12,13 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((500, 800))
 pygame.display.set_caption('CarRacing')
 background_color = (0,0,0)
-#background_image = pygame.image.load('game_over.png')
-#background_image = pygame.transform.scale(background_image, (500, 800))
 
 car_sound = pygame.mixer.Sound('sounds/engine.wav')
 car_sound.play(-1)
 
 crash_sound = pygame.mixer.Sound('sounds/crash.wav')
 
-font = pygame.freetype.Font(None, 20)
+#font = pygame.freetype.Font(None, 20)
 
 road_group = pygame.sprite.Group()
 spawn_road_time = pygame.USEREVENT
@@ -47,6 +45,12 @@ barrier1 = get_car_image('imgs/barrier.png', size=(60, 80), angle=0)
 barrier2 = get_car_image('imgs/barrier_2.png', size=(60, 80), angle=0)
 #barrier3 = get_car_image('imgs/barrier_3.png', size=(70, 90), angle=0)
 barrier_images.extend([barrier1, barrier2])
+
+game_over_image = pygame.image.load('imgs/game_over.png')
+game_over_image = pygame.transform.scale(game_over_image, (500, 500))
+x = (screen.get_width() - game_over_image.get_width()) // 2
+y = (screen.get_height() - game_over_image.get_height()) // 2
+
 
 road = Road(road_image, (250, 400))
 road_group.add(road)
@@ -124,7 +128,9 @@ while running:
        draw_all()
        car.crash(crash_sound, barrier_group)
     elif car.game_status == 'game_over':
-        font.render_to(screen, (30, 300), 'Game Over', (255, 255, 255))
+        screen.blit(game_over_image,(x, y))
+        pygame.display.flip()
+        #font.render_to(screen, (30, 300), 'Game Over', (255, 255, 255))
         car_sound.stop()
 
     pygame.display.flip()
