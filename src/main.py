@@ -17,7 +17,7 @@ background_color = (0,0,0)
 
 road_group = pygame.sprite.Group()
 spawn_road_time = pygame.USEREVENT
-pygame.time.set_timer(spawn_road_time, 5000)
+pygame.time.set_timer(spawn_road_time, 1000)
 
 
 def get_car_image(filename, size, angle):
@@ -27,15 +27,16 @@ def get_car_image(filename, size, angle):
     return image
 
 
-my_car_image = get_car_image('imgs/car1.png', size=(100, 70), angle=0)
-road_image = get_car_image('imgs/road1.png')
-road_image = pygame.transform.scale(road_image, (500, 400))
+my_car_image = get_car_image('imgs/car1.png', size=(100, 90), angle=0)
+road_image = pygame.image.load('imgs/road.jpg')
+road_image = pygame.transform.scale(road_image, (500, 800))
 
 
-road = Road(road_image, (250,-600))
+road = Road(road_image, (250, 400))
 road_group.add(road)
-road = Road(road_image, (250,-600))
+road = Road(road_image, (250, 0))
 road_group.add(road)
+
 
 def spawn_road():
     road = Road(road_image, (250,-600))
@@ -50,10 +51,7 @@ def draw_all():
 
 
 
-
-
-
-car = MyCar((300,600), my_car_image)
+car = MyCar((315,600), my_car_image)
 
 
 running = True

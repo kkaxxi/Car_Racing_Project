@@ -9,4 +9,4 @@ class Road(pygame.sprite.Sprite):
         self.rect.center = position
 
     def update(self):
-        self.rect.y *= 3
+        self.rect.y += 3
