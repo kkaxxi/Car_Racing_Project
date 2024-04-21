@@ -4,6 +4,7 @@ import pygame.freetype
 from src.car import MyCar
 from src.road import Road
 from src.barriers import Barrier
+import os
 
 pygame.init()
 
@@ -13,10 +14,19 @@ screen = pygame.display.set_mode((500, 800))
 pygame.display.set_caption('CarRacing')
 background_color = (0,0,0)
 
-car_sound = pygame.mixer.Sound('../sounds/engine.wav')
-car_sound.play(-1)
+project_root = os.getenv('PROJECT_ROOT', '.')
 
-crash_sound = pygame.mixer.Sound('../sounds/crash.wav')
+car_sound_path = os.path.join(project_root, 'sounds', 'engine.wav')
+crash_sound_path = os.path.join(project_root, 'sounds', 'crash.wav')
+
+
+car_sound = pygame.mixer.Sound(car_sound_path)
+car_sound.play(-1)
+crash_sound = pygame.mixer.Sound(crash_sound_path)
+
+#car_sound = pygame.mixer.Sound('../sounds/engine.wav')
+
+#crash_sound = pygame.mixer.Sound('../sounds/crash.wav')
 
 #font = pygame.freetype.Font(None, 20)
 
@@ -48,7 +58,7 @@ def get_car_image(filename, size, angle):
     image = pygame.transform.rotate(image, angle)
     return image
 
-
+"""
 my_car_image = get_car_image('../imgs/car1.png', size=(100, 90), angle=0)
 road_image = pygame.image.load('../imgs/road.jpg')
 road_image = pygame.transform.scale(road_image, (500, 800))
@@ -60,6 +70,26 @@ barrier2 = get_car_image('../imgs/barrier_2.png', size=(60, 80), angle=0)
 barrier_images.extend([barrier1, barrier2])
 
 game_over_image = pygame.image.load('../imgs/game_over.png')
+game_over_image = pygame.transform.scale(game_over_image, (500, 500))
+x = (screen.get_width() - game_over_image.get_width()) // 2
+y = (screen.get_height() - game_over_image.get_height()) // 2
+"""
+my_car_image_path = os.path.join(project_root, 'imgs', 'car1.png')
+road_image_path = os.path.join(project_root, 'imgs', 'road.jpg')
+barrier1_image_path = os.path.join(project_root, 'imgs', 'barrier.png')
+barrier2_image_path = os.path.join(project_root, 'imgs', 'barrier_2.png')
+game_over_image_path = os.path.join(project_root, 'imgs', 'game_over.png')
+
+my_car_image = get_car_image(my_car_image_path, size=(100, 90), angle=0)
+road_image = pygame.image.load(road_image_path)
+road_image = pygame.transform.scale(road_image, (500, 800))
+
+barrier_images = []
+barrier1 = get_car_image(barrier1_image_path, size=(60, 80), angle=0)
+barrier2 = get_car_image(barrier2_image_path, size=(60, 80), angle=0)
+barrier_images.extend([barrier1, barrier2])
+
+game_over_image = pygame.image.load(game_over_image_path)
 game_over_image = pygame.transform.scale(game_over_image, (500, 500))
 x = (screen.get_width() - game_over_image.get_width()) // 2
 y = (screen.get_height() - game_over_image.get_height()) // 2
