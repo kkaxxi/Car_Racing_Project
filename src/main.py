@@ -14,10 +14,10 @@ screen = pygame.display.set_mode((500, 800))
 pygame.display.set_caption('CarRacing')
 background_color = (0,0,0)
 
-project_root = os.getenv('PROJECT_ROOT', '.')
+#project_root = os.getenv('PROJECT_ROOT', '.')
 
-car_sound_path = os.path.join(project_root, 'sounds', 'engine.wav')
-crash_sound_path = os.path.join(project_root, 'sounds', 'crash.wav')
+car_sound_path = os.path.join('sounds', 'engine.wav')
+crash_sound_path = os.path.join('sounds', 'crash.wav')
 
 
 car_sound = pygame.mixer.Sound(car_sound_path)
@@ -74,11 +74,11 @@ game_over_image = pygame.transform.scale(game_over_image, (500, 500))
 x = (screen.get_width() - game_over_image.get_width()) // 2
 y = (screen.get_height() - game_over_image.get_height()) // 2
 """
-my_car_image_path = os.path.join(project_root, 'imgs', 'car1.png')
-road_image_path = os.path.join(project_root, 'imgs', 'road.jpg')
-barrier1_image_path = os.path.join(project_root, 'imgs', 'barrier.png')
-barrier2_image_path = os.path.join(project_root, 'imgs', 'barrier_2.png')
-game_over_image_path = os.path.join(project_root, 'imgs', 'game_over.png')
+my_car_image_path = os.path.join('imgs', 'car1.png')
+road_image_path = os.path.join('imgs', 'road.jpg')
+barrier1_image_path = os.path.join('imgs', 'barrier.png')
+barrier2_image_path = os.path.join('imgs', 'barrier_2.png')
+game_over_image_path = os.path.join('imgs', 'game_over.png')
 
 my_car_image = get_car_image(my_car_image_path, size=(100, 90), angle=0)
 road_image = pygame.image.load(road_image_path)
