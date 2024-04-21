@@ -30,6 +30,19 @@ pygame.time.set_timer(spawn_barrier_time, 1000)
 
 
 def get_car_image(filename, size, angle):
+    """
+    Load and transform the car image.
+
+    This function loads an image file, resizes it, and rotates it according to the specified angle.
+
+    Parameters:
+    filename (str): The filename of the image to load.
+    size (tuple): A tuple containing the width and height to resize the image to.
+    angle (int): The angle in degrees to rotate the image by.
+
+    Returns:
+    pygame.Surface: The transformed car image.
+    """
     image = pygame.image.load(filename)
     image = pygame.transform.scale(image, size)
     image = pygame.transform.rotate(image, angle)
@@ -59,11 +72,22 @@ road_group.add(road)
 
 
 def spawn_road():
+    """
+    Spawn a new road object.
+
+    This function creates a new instance of the Road class and adds it to the road_group sprite group.
+    """
     road = Road(road_image, (250,-600))
     road_group.add(road)
 
 
 def spawn_barrier():
+    """
+    Spawn a new barrier object.
+
+    This function generates random coordinates for the barrier's position and selects a random image from barrier_images.
+    The barrier is then created using the selected image and position, and added to the barrier_group sprite group.
+    """
     position_y = random.randint(240, 460)  # Випадкова y-координата бар'єру
     lane = random.randint(1, 6)  # Випадково обираємо полосу дороги
     if lane == 1:
@@ -83,6 +107,12 @@ def spawn_barrier():
 
 
 def draw_all():
+    """
+    Draw all game objects on the screen.
+
+    This function updates and draws all objects in the road_group and barrier_group sprite groups,
+    as well as the car object.
+    """
     road_group.update()
     road_group.draw(screen)
     barrier_group.update()
