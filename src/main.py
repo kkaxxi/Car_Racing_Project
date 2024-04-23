@@ -220,6 +220,7 @@ while running:
         draw_all()
         car.crash(crash_sound, barrier_group)
 
+        pygame.mixer.unpause()
         pause_button.draw(screen)
 
     if car.game_status == 'game over':
