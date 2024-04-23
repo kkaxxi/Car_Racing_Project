@@ -154,6 +154,8 @@ def draw_all():
 
 car = MyCar((315,600), my_car_image)
 
+car.game_status = 'pre game'
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -165,6 +167,12 @@ while running:
             spawn_barrier()
 
     screen.fill(background_color)
+
+    if car.game_status == 'pre game':
+        screen.blit(select_car_image,(0,0))
+
+        pygame.mixer.pause()
+
     if car.game_status == 'game':
         car.move()
         draw_all()
