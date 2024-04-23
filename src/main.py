@@ -5,7 +5,6 @@ from src.car import MyCar
 from src.road import Road
 from src.barriers import Barrier
 import os
-from button import Button
 
 pygame.init()
 
@@ -80,12 +79,10 @@ road_image_path = os.path.join('imgs', 'road.jpg')
 barrier1_image_path = os.path.join('imgs', 'barrier.png')
 barrier2_image_path = os.path.join('imgs', 'barrier_2.png')
 game_over_image_path = os.path.join('imgs', 'game_over.png')
-select_car_image_path = os.path.join('imgs', 'select_car.png')
 
 my_car_image = get_car_image(my_car_image_path, size=(100, 90), angle=0)
 road_image = pygame.image.load(road_image_path)
 road_image = pygame.transform.scale(road_image, (500, 800))
-select_car_image = get_car_image(select_car_image_path, size=(500, 500), angle=0)
 
 barrier_images = []
 barrier1 = get_car_image(barrier1_image_path, size=(60, 80), angle=0)
@@ -152,41 +149,8 @@ def draw_all():
     barrier_group.draw(screen)
     car.draw(screen)
 
-#select car
-pause = False
-
-def buttony_action():
-    car_image = get_car_image('imgs/car1.png', size=(100, 90), angle=0)
-    car.swap_img(car_image)
-
-def buttonr_action():
-
-    car_image = get_car_image('imgs/car3.png', size=(100, 90), angle=0)
-    car.swap_img(car_image)
-
-def buttonw_action():
-    car_image = get_car_image('imgs/car2.png', size=(100, 90), angle=0)
-    car.swap_img(car_image)
-
-def button_start_action():
-    barrier_group.empty()
-    car.game_status = 'game'
-
-def pause_button_action():
-    global pause
-    pause = True
-
-buttony = Button(210,150,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttony_action)
-buttonr = Button(210,310,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonr_action)
-buttonw = Button(210,495,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonw_action)
-button_start = Button(210,700,80,20,"Start", 36, (255,255,255), (0,0,255), (0,255, 255), button_start_action)
-pause_button = Button(410,10,80,20,"Pause", 36, (255,255,255), (0,0,255), (0,255, 255), pause_button_action)
-
-
 
 car = MyCar((315,600), my_car_image)
-
-car.game_status = 'pre game'
 
 running = True
 while running:
@@ -197,31 +161,12 @@ while running:
             spawn_road()
         if event.type == spawn_barrier_time:
             spawn_barrier()
-        buttony.handle_event(event)
-        buttonr.handle_event(event)
-        buttonw.handle_event(event)
-        button_start.handle_event(event)
-        pause_button.handle_event(event)
 
     screen.fill(background_color)
-
-    if car.game_status == 'pre game':
-        screen.blit(select_car_image,(0,0))
-
-        buttony.draw(screen)
-        buttonr.draw(screen)
-        buttonw.draw(screen)
-        button_start.draw(screen)
-
-        pygame.mixer.pause()
-
     if car.game_status == 'game':
         car.move()
         draw_all()
         car.crash(crash_sound, barrier_group)
-
-        pause_button.draw(screen)
-
     if car.game_status == 'game over':
         screen.fill
     pygame.display.flip()
