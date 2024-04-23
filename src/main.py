@@ -206,6 +206,7 @@ while running:
         buttonw.handle_event(event)
         button_start.handle_event(event)
         pause_button.handle_event(event)
+        unpause_button.handle_event(event)
 
     #screen.fill(background_color)
 
