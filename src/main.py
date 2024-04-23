@@ -176,13 +176,22 @@ def pause_button_action():
     global pause
     pause = True
 
+def unpause_button_action():
+    global pause
+    pause = False
+
+def restart_button_action():
+    car.game_status = 'pre game'
+    global pause
+    pause = False
+
 buttony = Button(210,150,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttony_action)
 buttonr = Button(210,310,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonr_action)
 buttonw = Button(210,495,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonw_action)
 button_start = Button(210,700,80,20,"Start", 36, (255,255,255), (0,0,255), (0,255, 255), button_start_action)
 pause_button = Button(410,10,80,20,"Pause", 36, (255,255,255), (0,0,255), (0,255, 255), pause_button_action)
-
-
+unpause_button = Button(190,400,120,30,"Unpause", 36, (255,255,255), (0,0,255), (0,255, 255), unpause_button_action)
+restart_button = Button(200,600,100,20,"Restart", 36, (255,255,255), (255,0,255), (0,255, 255), restart_button_action)
 
 car = MyCar((315,600), my_car_image)
 
@@ -193,19 +202,24 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == spawn_road_time:
+        if not pause:
+         if event.type == spawn_road_time:
             spawn_road()
-        if event.type == spawn_barrier_time:
+         if event.type == spawn_barrier_time:
             spawn_barrier()
         buttony.handle_event(event)
         buttonr.handle_event(event)
         buttonw.handle_event(event)
         button_start.handle_event(event)
         pause_button.handle_event(event)
+        unpause_button.handle_event(event)
+        restart_button.handle_event(event)
 
-    screen.fill(background_color)
+    #screen.fill(background_color)
 
-    if car.game_status == 'pre game':
+    if not pause:
+      screen.fill(background_color)
+      if car.game_status == 'pre game':
         screen.blit(select_car_image,(0,0))
 
         buttony.draw(screen)
@@ -215,7 +229,7 @@ while running:
 
         pygame.mixer.pause()
 
-    if car.game_status == 'game':
+      if car.game_status == 'game':
         car.move()
         draw_all()
         car.crash(crash_sound, barrier_group)
@@ -223,8 +237,14 @@ while running:
         pygame.mixer.unpause()
         pause_button.draw(screen)
 
-    if car.game_status == 'game over':
+      if car.game_status == 'game over':
         screen.fill
+
+    if pause:
+        unpause_button.draw(screen)
+        restart_button.draw(screen)
+        pygame.mixer.pause()
+
     pygame.display.flip()
     clock.tick(60)
 
@@ -233,10 +253,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == spawn_road_time:
-            spawn_road()
-        if event.type == spawn_barrier_time:
-            spawn_barrier()
+        if not pause:
+          if event.type == spawn_road_time:
+             spawn_road()
+          if event.type == spawn_barrier_time:
+             spawn_barrier()
 
     screen.fill(background_color)
     if car.game_status == 'game':
