@@ -79,10 +79,12 @@ road_image_path = os.path.join('imgs', 'road.jpg')
 barrier1_image_path = os.path.join('imgs', 'barrier.png')
 barrier2_image_path = os.path.join('imgs', 'barrier_2.png')
 game_over_image_path = os.path.join('imgs', 'game_over.png')
+select_car_image_path = os.path.join('imgs', 'select_car.png')
 
 my_car_image = get_car_image(my_car_image_path, size=(100, 90), angle=0)
 road_image = pygame.image.load(road_image_path)
 road_image = pygame.transform.scale(road_image, (500, 800))
+select_car_image = get_car_image(select_car_image_path, size=(500, 500), angle=0)
 
 barrier_images = []
 barrier1 = get_car_image(barrier1_image_path, size=(60, 80), angle=0)
