@@ -180,12 +180,18 @@ def unpause_button_action():
     global pause
     pause = False
 
+def restart_button_action():
+    car.game_status = 'pre game'
+    global pause
+    pause = False
+
 buttony = Button(210,150,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttony_action)
 buttonr = Button(210,310,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonr_action)
 buttonw = Button(210,495,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonw_action)
 button_start = Button(210,700,80,20,"Start", 36, (255,255,255), (0,0,255), (0,255, 255), button_start_action)
 pause_button = Button(410,10,80,20,"Pause", 36, (255,255,255), (0,0,255), (0,255, 255), pause_button_action)
 unpause_button = Button(190,400,120,30,"Unpause", 36, (255,255,255), (0,0,255), (0,255, 255), unpause_button_action)
+restart_button = Button(200,600,100,20,"Restart", 36, (255,255,255), (255,0,255), (0,255, 255), restart_button_action)
 
 car = MyCar((315,600), my_car_image)
 
@@ -207,6 +213,7 @@ while running:
         button_start.handle_event(event)
         pause_button.handle_event(event)
         unpause_button.handle_event(event)
+        restart_button.handle_event(event)
 
     #screen.fill(background_color)
 
@@ -235,6 +242,7 @@ while running:
 
     if pause:
         unpause_button.draw(screen)
+        restart_button.draw(screen)
         pygame.mixer.pause()
 
     pygame.display.flip()
