@@ -88,8 +88,8 @@ road_image = pygame.transform.scale(road_image, (500, 800))
 select_car_image = get_car_image(select_car_image_path, size=(500, 500), angle=0)
 
 barrier_images = []
-barrier1 = get_car_image(barrier1_image_path, size=(60, 80), angle=0)
-barrier2 = get_car_image(barrier2_image_path, size=(60, 80), angle=0)
+barrier1 = get_car_image(barrier1_image_path, size=(40, 60), angle=0)
+barrier2 = get_car_image(barrier2_image_path, size=(40, 60), angle=0)
 barrier_images.extend([barrier1, barrier2])
 
 game_over_image = pygame.image.load(game_over_image_path)
@@ -248,27 +248,4 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if not pause:
-          if event.type == spawn_road_time:
-             spawn_road()
-          if event.type == spawn_barrier_time:
-             spawn_barrier()
 
-    screen.fill(background_color)
-    if car.game_status == 'game':
-       car.move()
-       draw_all()
-       car.crash(crash_sound, barrier_group)
-    elif car.game_status == 'game_over':
-        screen.blit(game_over_image,(x, y))
-        pygame.display.flip()
-        #font.render_to(screen, (30, 300), 'Game Over', (255, 255, 255))
-        car_sound.stop()
-
-    pygame.display.flip()
-    clock.tick(60)

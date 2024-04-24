@@ -45,6 +45,9 @@ class MyCar:
         """
         screen.blit(self.image, self.rect)
 
+    def swap_img(self, image):
+        self.image = image
+
     def crash(self, sound, barriers):
         """
         Checks for collisions with barriers and changes game status if necessary.
