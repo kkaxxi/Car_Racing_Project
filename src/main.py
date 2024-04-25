@@ -15,7 +15,6 @@ screen = pygame.display.set_mode((500, 800))
 pygame.display.set_caption('CarRacing')
 background_color = (0,0,0)
 
-#project_root = os.getenv('PROJECT_ROOT', '.')
 
 car_sound_path = os.path.join('sounds', 'engine.wav')
 crash_sound_path = os.path.join('sounds', 'crash.wav')
@@ -25,11 +24,6 @@ car_sound = pygame.mixer.Sound(car_sound_path)
 car_sound.play(-1)
 crash_sound = pygame.mixer.Sound(crash_sound_path)
 
-#car_sound = pygame.mixer.Sound('../sounds/engine.wav')
-
-#crash_sound = pygame.mixer.Sound('../sounds/crash.wav')
-
-#font = pygame.freetype.Font(None, 20)
 
 road_group = pygame.sprite.Group()
 spawn_road_time = pygame.USEREVENT
@@ -59,22 +53,7 @@ def get_car_image(filename, size, angle):
     image = pygame.transform.rotate(image, angle)
     return image
 
-"""
-my_car_image = get_car_image('../imgs/car1.png', size=(100, 90), angle=0)
-road_image = pygame.image.load('../imgs/road.jpg')
-road_image = pygame.transform.scale(road_image, (500, 800))
 
-barrier_images = []
-barrier1 = get_car_image('../imgs/barrier.png', size=(60, 80), angle=0)
-barrier2 = get_car_image('../imgs/barrier_2.png', size=(60, 80), angle=0)
-#barrier3 = get_car_image('imgs/barrier_3.png', size=(70, 90), angle=0)
-barrier_images.extend([barrier1, barrier2])
-
-game_over_image = pygame.image.load('../imgs/game_over.png')
-game_over_image = pygame.transform.scale(game_over_image, (500, 500))
-x = (screen.get_width() - game_over_image.get_width()) // 2
-y = (screen.get_height() - game_over_image.get_height()) // 2
-"""
 my_car_image_path = os.path.join('imgs', 'car1.png')
 road_image_path = os.path.join('imgs', 'road.jpg')
 barrier1_image_path = os.path.join('imgs', 'barrier.png')
@@ -121,20 +100,20 @@ def spawn_barrier():
     This function generates random coordinates for the barrier's position and selects a random image from barrier_images.
     The barrier is then created using the selected image and position, and added to the barrier_group sprite group.
     """
-    position_y = random.randint(240, 460)  # Випадкова y-координата бар'єру
-    lane = random.randint(1, 6)  # Випадково обираємо полосу дороги
+    position_y = random.randint(240, 460)  #
+    lane = random.randint(1, 6)
     if lane == 1:
-        position_x = 165  # Перша полоса
+        position_x = 165
     elif lane == 2:
-        position_x = 215  # Друга полоса
+        position_x = 215
     elif lane == 3:
-        position_x = 265  # Третя полоса
+        position_x = 265
     elif lane == 4:
-        position_x = 315  # Четверта полоса
+        position_x = 315
     elif lane == 5:
-        position_x = 365  # П'ята полоса
+        position_x = 365
     else:
-        position_x = 415  # Шоста полоса
+        position_x = 415
     barrier = Barrier(random.choice(barrier_images), (position_x, position_y))
     barrier_group.add(barrier)
 
@@ -215,7 +194,6 @@ while running:
         unpause_button.handle_event(event)
         restart_button.handle_event(event)
 
-    #screen.fill(background_color)
 
     if not pause:
       screen.fill(background_color)
@@ -248,4 +226,25 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == spawn_road_time:
+            spawn_road()
+        if event.type == spawn_barrier_time:
+            spawn_barrier()
 
+    screen.fill(background_color)
+    if car.game_status == 'game':
+       car.move()
+       draw_all()
+       car.crash(crash_sound, barrier_group)
+    elif car.game_status == 'game_over':
+        screen.blit(game_over_image,(x, y))
+        pygame.display.flip()
+        car_sound.stop()
+
+    pygame.display.flip()
+    clock.tick(60)
