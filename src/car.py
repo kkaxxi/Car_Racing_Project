@@ -46,6 +46,9 @@ class MyCar:
         screen.blit(self.image, self.rect)
 
     def swap_img(self, image):
+
+        """Replaces current car image with another one"""
+
         self.image = image
 
     def crash(self, sound, barriers):
