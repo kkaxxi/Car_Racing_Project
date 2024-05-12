@@ -16,10 +16,10 @@ def test_initial_position(barrier):
 def test_remove(barrier):
     barrier.rect.top = 801  # Помещаем дорогу за пределы экрана
     barrier.remove()  # Вызываем метод удаления
-    assert barrier.alive() == False  # Проверяем, что дорога была удалена
+    assert not barrier.alive()  # Проверяем, что дорога была удалена
 
 
 def test_update(barrier):
     initial_y = barrier.rect.y  # Запоминаем начальное положение по оси y
     barrier.update()  # Вызываем метод обновления
-    assert barrier.rect.y == initial_y + 3  # Проверяем, что позиция по оси y обновилась на 3 пикселя
+    assert barrier.rect.y == initial_y + 3

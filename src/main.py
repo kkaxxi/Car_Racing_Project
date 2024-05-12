@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((500, 800))
 pygame.display.set_caption('CarRacing')
-background_color = (0,0,0)
+background_color = (0, 0, 0)
 
 
 car_sound_path = os.path.join('..', 'sounds', 'engine.wav')
@@ -25,7 +25,6 @@ car_sound.play(-1)
 car_sound.set_volume(0.3)
 crash_sound = pygame.mixer.Sound(crash_sound_path)
 crash_sound.set_volume(0.2)
-
 
 
 road_group = pygame.sprite.Group()
@@ -41,11 +40,11 @@ def get_car_image(filename, size, angle):
     """
     Load and transform the car image.
 
-    This function loads an image file, resizes it, and rotates it according to the specified angle.
-
+    This function loads an image file, resizes it, and rotates it.
     Parameters:
     filename (str): The filename of the image to load.
-    size (tuple): A tuple containing the width and height to resize the image to.
+    size (tuple): A tuple containing the width
+    and height to resize the image to.
     angle (int): The angle in degrees to rotate the image by.
 
     Returns:
@@ -67,7 +66,8 @@ select_car_image_path = os.path.join('..', 'imgs', 'select_car.png')
 my_car_image = get_car_image(my_car_image_path, size=(100, 90), angle=0)
 road_image = pygame.image.load(road_image_path)
 road_image = pygame.transform.scale(road_image, (500, 800))
-select_car_image = get_car_image(select_car_image_path, size=(500, 500), angle=0)
+select_car_image = get_car_image(select_car_image_path,
+                                 size=(500, 500), angle=0)
 
 barrier_images = []
 barrier1 = get_car_image(barrier1_image_path, size=(30, 50), angle=0)
@@ -89,10 +89,10 @@ road_group.add(road)
 def spawn_road(road_group, road_image):
     """
     Spawn a new road object.
-
-    This function creates a new instance of the Road class and adds it to the road_group sprite group.
+    This function creates a new instance of the Road class
+    and adds it to the road_group sprite group.
     """
-    road = Road(road_image, (250,-600))
+    road = Road(road_image, (250, -600))
     road_group.add(road)
 
 
@@ -100,8 +100,10 @@ def spawn_barrier(barrier_group, barrier_images):
     """
     Spawn a new barrier object.
 
-    This function generates random coordinates for the barrier's position and selects a random image from barrier_images.
-    The barrier is then created using the selected image and position, and added to the barrier_group sprite group.
+    This function generates random coordinates for the barrier's position
+     and selects a random image from barrier_images.
+    The barrier is then created using the selected image
+    and position, and added to the barrier_group sprite group.
     """
     position_y = random.randint(240, 460)  #
     lane = random.randint(1, 6)
@@ -125,7 +127,8 @@ def draw_all():
     """
     Draw all game objects on the screen.
 
-    This function updates and draws all objects in the road_group and barrier_group sprite groups,
+    This function updates and draws all objects in the road_group
+    and barrier_group sprite groups,
     as well as the car object.
     """
     road_group.update()
@@ -135,7 +138,6 @@ def draw_all():
     car.draw(screen)
 
 
-#select car
 pause = False
 
 
@@ -176,28 +178,41 @@ def restart_button_action():
     pause = False
 
 
-buttony = Button(210,150,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttony_action)
-buttonr = Button(210,310,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonr_action)
-buttonw = Button(210,495,80,20,"Select", 36, (255,255,255), (0,0,255), (0,255, 255), buttonw_action)
-button_start = Button(210,700,80,20,"Start", 36, (255,255,255), (0,0,255), (0,255, 255), button_start_action)
-pause_button = Button(410,10,80,20,"Pause", 36, (255,255,255), (0,0,255), (0,255, 255), pause_button_action)
-unpause_button = Button(190,400,120,30,"Unpause", 36, (255,255,255), (0,0,255), (0,255, 255), unpause_button_action)
-restart_button = Button(200,600,100,20,"Restart", 36, (255,255,255), (255,0,255), (0,255, 255), restart_button_action)
+buttony = Button(210, 150, 80, 20, "Select",
+                 36, (255, 255, 255), (0, 0, 255),
+                 (0, 255, 255), buttony_action)
+buttonr = Button(210, 310, 80, 20, "Select",
+                 36, (255, 255, 255), (0, 0, 255),
+                 (0, 255, 255), buttonr_action)
+buttonw = Button(210, 495, 80, 20, "Select",
+                 36, (255, 255, 255), (0, 0, 255),
+                 (0, 255, 255), buttonw_action)
+button_start = Button(210, 700, 80, 20, "Start",
+                      36, (255, 255, 255), (0, 0, 255),
+                      (0, 255, 255), button_start_action)
+pause_button = Button(410, 10, 80, 20, "Pause",
+                      36, (255, 255, 255), (0, 0, 255),
+                      (0, 255, 255), pause_button_action)
+unpause_button = Button(190, 400, 120, 30, "Unpause",
+                        36, (255, 255, 255), (0, 0, 255),
+                        (0, 255, 255), unpause_button_action)
+restart_button = Button(200, 600, 100, 20, "Restart",
+                        36, (255, 255, 255), (255, 0, 255),
+                        (0, 255, 255), restart_button_action)
 
-car = MyCar((315,600), my_car_image)
+car = MyCar((315, 600), my_car_image)
 
 car.game_status = 'pre game'
-
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if not pause:
-         if event.type == spawn_road_time:
-            spawn_road(road_group, road_image)
-         if event.type == spawn_barrier_time:
-            spawn_barrier(barrier_group, barrier_images)
+            if event.type == spawn_road_time:
+                spawn_road(road_group, road_image)
+            if event.type == spawn_barrier_time:
+                spawn_barrier(barrier_group, barrier_images)
         buttony.handle_event(event)
         buttonr.handle_event(event)
         buttonw.handle_event(event)
@@ -206,29 +221,28 @@ while running:
         unpause_button.handle_event(event)
         restart_button.handle_event(event)
 
-
     if not pause:
-      screen.fill(background_color)
-      if car.game_status == 'pre game':
-        screen.blit(select_car_image,(0,0))
+        screen.fill(background_color)
+        if car.game_status == 'pre game':
+            screen.blit(select_car_image, (0, 0))
 
-        buttony.draw(screen)
-        buttonr.draw(screen)
-        buttonw.draw(screen)
-        button_start.draw(screen)
+            buttony.draw(screen)
+            buttonr.draw(screen)
+            buttonw.draw(screen)
+            button_start.draw(screen)
 
-        pygame.mixer.pause()
+            pygame.mixer.pause()
 
-      if car.game_status == 'game':
-        car.move()
-        draw_all()
-        car.crash(crash_sound, barrier_group)
+        if car.game_status == 'game':
+            car.move()
+            draw_all()
+            car.crash(crash_sound, barrier_group)
 
-        pygame.mixer.unpause()
-        pause_button.draw(screen)
+            pygame.mixer.unpause()
+            pause_button.draw(screen)
 
-      if car.game_status == 'game over':
-        screen.fill
+        if car.game_status == 'game over':
+            screen.fill(background_color)  # Corrected indentation here
 
     if pause:
         unpause_button.draw(screen)
@@ -250,11 +264,11 @@ while running:
 
     screen.fill(background_color)
     if car.game_status == 'game':
-       car.move()
-       draw_all()
-       car.crash(crash_sound, barrier_group)
+        car.move()
+        draw_all()
+        car.crash(crash_sound, barrier_group)
     elif car.game_status == 'game_over':
-        screen.blit(game_over_image,(x, y))
+        screen.blit(game_over_image, (x, y))
         pygame.display.flip()
         car_sound.stop()
 

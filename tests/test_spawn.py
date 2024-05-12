@@ -4,7 +4,7 @@ import pygame
 from src.road import Road
 from src.barriers import Barrier
 from src.main import spawn_road, spawn_barrier
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 # Get the project root directory
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +33,7 @@ def sound_mocker():
 
 def test_spawn_road(screen, road_image, sound_mocker):
     road_group = pygame.sprite.Group()
-    spawn_road(road_group, road_image)  # Pass road_group and road_image as arguments
+    spawn_road(road_group, road_image)
 
     assert len(road_group.sprites()) == 1
     road = road_group.sprites()[0]

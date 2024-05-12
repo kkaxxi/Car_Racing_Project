@@ -53,11 +53,11 @@ class MyCar:
 
     def crash(self, sound, barriers):
         """
-        Checks for collisions with barriers and changes game status if necessary.
+        Checks for collisions and changes game status.
 
         Parameters:
         sound (pygame.mixer.Sound): The sound to play in case of a crash.
-        barriers (pygame.sprite.Group): The group of barrier objects to check for collisions.
+        barriers (pygame.sprite.Group): The group of barrier objects.
         """
         for car in barriers:
             if car.rect.colliderect(self.rect):

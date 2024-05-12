@@ -2,7 +2,6 @@ import pytest
 from unittest.mock import MagicMock
 from pygame import Surface
 from src.car import MyCar
-from unittest.mock import patch
 import pygame.key
 
 
@@ -18,7 +17,7 @@ def test_init(car):
 
 
 def test_border():
-    car = MyCar((0, 0), pygame.Surface((100, 90)))  # Initialize MyCar instance with a surface size similar to the car image
+    car = MyCar((0, 0), pygame.Surface((100, 90)))
     car.rect.right = 500
     car.rect.left = 100
     car.border()
